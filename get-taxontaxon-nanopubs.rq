@@ -33,8 +33,10 @@ select distinct ?np ?label ?subjtaxon ?subjtaxonLabel ?subjlcstage ?pred ?predLa
   graph ?i {
     ?np dct:creator ?__creator_iri .
     optional { ?subjtaxon nt:hasLabelFromApi ?subjtaxonLabel . }
-    optional { ?pred nt:hasLabelFromApi ?predLabel . }
     optional { ?objtaxon nt:hasLabelFromApi ?objtaxonLabel . }
+  }
+  graph <http://purl.org/np/RAodaWZBY-yDEtl9reYazBfI-YVD5L4zPh8RrVFS0kbEo#assertion> {
+    optional { ?pred rdfs:label ?predLabel . }
   }
   bind(coalesce(replace(str(?subjtaxonLabel), " - .*", ""), replace(str(?subjtaxon), "^.*/([^/]*)$", "$1")) as ?subjx)
   bind(replace(str(?predLabel), " - .*", "") as ?predx)
