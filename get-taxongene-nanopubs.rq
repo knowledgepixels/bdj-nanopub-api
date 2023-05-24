@@ -34,6 +34,7 @@ select distinct ?np ?label ?taxon ?taxonLabel ?lcstage ?pred ?predLabel ?gene ?g
   }
   optional { graph ?i { ?taxon nt:hasLabelFromApi ?taxonLabel . } }
   optional { graph ?i { ?pred nt:hasLabelFromApi ?predLabel . } }
+  optional { graph <http://purl.org/np/RAl6ML-bkelnW2pIvy4r9ftFBOjtWUfCLQvQWG4UTukC4#assertion> { ?pred rdfs:label ?predLabel . } }
   optional { graph ?i { ?gene nt:hasLabelFromApi ?geneLabel . } }
   bind(coalesce(replace(str(?taxonLabel), " - .*", ""), replace(str(?taxon), "^.*/([^/]*)$", "$1")) as ?taxonx)
   bind(replace(str(?predLabel), " - .*", "") as ?predx)
