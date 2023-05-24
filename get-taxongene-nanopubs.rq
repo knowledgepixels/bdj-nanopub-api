@@ -31,10 +31,10 @@ select distinct ?np ?label ?taxon ?taxonLabel ?lcstage ?pred ?predLabel ?gene ?g
   }
   graph ?i {
     ?np dct:creator ?__creator_iri .
-    optional { ?taxon nt:hasLabelFromApi ?taxonLabel . }
-    optional { ?pred nt:hasLabelFromApi ?predLabel . }
-    optional { ?gene nt:hasLabelFromApi ?geneLabel . }
   }
+  optional { graph ?i { ?taxon nt:hasLabelFromApi ?taxonLabel . } }
+  optional { graph ?i { ?pred nt:hasLabelFromApi ?predLabel . } }
+  optional { graph ?i { ?gene nt:hasLabelFromApi ?geneLabel . } }
   bind(coalesce(replace(str(?taxonLabel), " - .*", ""), replace(str(?taxon), "^.*/([^/]*)$", "$1")) as ?taxonx)
   bind(replace(str(?predLabel), " - .*", "") as ?predx)
   bind(coalesce(replace(str(?geneLabel), " - .*", ""), replace(str(?gene), "^.*/([^/]*)$", "$1")) as ?genex)
