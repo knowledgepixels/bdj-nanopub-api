@@ -11,6 +11,7 @@ prefix dct: <http://purl.org/dc/terms/>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix nt: <https://w3id.org/np/o/ntemplate/>
 prefix biodiv: <https://w3id.org/kpxl/biodiv/terms/>
+prefix biolink: <https://w3id.org/biolink/vocab/>
 
 select distinct ?np ?subj ?rel ?obj ?label ?date where {
   graph npa:graph {
@@ -23,7 +24,10 @@ select distinct ?np ?subj ?rel ?obj ?label ?date where {
     ?np np:hasPublicationInfo ?i.
   }
   graph ?a {
-    ?subj ?rel ?obj .
+    ?association a biolink:OrganismToOrganismAssociation .
+    ?association biolink:predicate ?rel .
+    ?association biolink:subject ?subj .
+    ?association biolink:object ?obj .
     ?subj a ?subjtaxon .
     ?obj a ?objtaxon .
     ?subjtaxon biodiv:hasTaxonName ?subjname .
