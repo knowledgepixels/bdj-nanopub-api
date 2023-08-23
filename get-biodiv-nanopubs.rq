@@ -13,7 +13,7 @@ prefix biolink: <https://w3id.org/biolink/vocab/>
 prefix nt: <https://w3id.org/np/o/ntemplate/>
 prefix biodiv: <https://w3id.org/kpxl/biodiv/terms/>
 
-select distinct ?np ?label ?type ?example ?creator ?date where {
+select distinct ?np ?label ?type ?creator ?date where {
   graph npa:graph {
     ?np npa:hasHeadGraph ?h .
     ?np dct:created ?date .
@@ -23,18 +23,22 @@ select distinct ?np ?label ?type ?example ?creator ?date where {
     ?np np:hasPublicationInfo ?i.
     ?np np:hasAssertion ?a.
   }
-  graph ?a {
-    ?association a ?__type_iri .
-    bind(?__type_iri as ?type)
-  }
   graph ?i {
     ?np dct:creator ?__creator_iri .
     bind(?__creator_iri as ?creator)
     ?np rdfs:label ?labelx .
     bind(str(?labelx) as ?label)
     ?np npx:hasNanopubType biodiv:BiodivNanopub .
-    ?np npx:introduces ?association .
-    bind(exists { ?np a npx:ExampleNanopub } as ?example)
+    #filter not exists { ?np a npx:ExampleNanopub . }
+  }
+  optional {
+    graph ?a {
+      ?association a ?__type_iri .
+      bind(?__type_iri as ?type)
+    }
+    graph ?i {
+      ?np npx:introduces ?association .
+    }
   }
   filter not exists {
     graph npa:graph {
