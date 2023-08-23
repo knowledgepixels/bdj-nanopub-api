@@ -13,7 +13,7 @@ prefix biolink: <https://w3id.org/biolink/vocab/>
 prefix nt: <https://w3id.org/np/o/ntemplate/>
 prefix biodiv: <https://w3id.org/kpxl/biodiv/terms/>
 
-select distinct ?np ?label ?type ?creator ?date where {
+select distinct ?np ?label ?type ?creator ?pubkey ?date where {
   graph npa:graph {
     ?np npa:hasHeadGraph ?h .
     ?np dct:created ?date .
