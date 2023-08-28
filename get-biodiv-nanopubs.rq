@@ -29,7 +29,7 @@ select distinct ?np ?label ?type ?creator ?pubkey ?date where {
     ?np rdfs:label ?labelx .
     bind(str(?labelx) as ?label)
     ?np npx:hasNanopubType biodiv:BiodivNanopub .
-    #filter not exists { ?np a npx:ExampleNanopub . }
+    filter not exists { ?np a npx:ExampleNanopub . }
   }
   optional {
     graph ?a {
