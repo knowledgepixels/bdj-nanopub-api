@@ -27,10 +27,11 @@ select distinct ?np ?label ?subjtaxon ?rel ?objtaxon ?source ?date where {
   graph ?a {
     ?association a biolink:OrganismTaxonToOrganismTaxonAssociation .
     ?association biolink:subject ?subjtaxon .
-    ?subjtaxon biodiv:hasTaxonName ?subjname .
     ?association biolink:predicate ?rel .
     ?association biolink:object ?objtaxon .
-    ?objtaxon biodiv:hasTaxonName ?objname .
+  }
+  graph <http://purl.org/np/RAodaWZBY-yDEtl9reYazBfI-YVD5L4zPh8RrVFS0kbEo#assertion> {
+    ?rel rdfs:label ?rellabel .
   }
   optional {
     graph ?p {
@@ -39,16 +40,9 @@ select distinct ?np ?label ?subjtaxon ?rel ?objtaxon ?source ?date where {
   }
   graph ?i {
     ?np dct:creator ?__creator_iri .
+    ?np rdfs:label ?labelx .
+    bind(str(?labelx) as ?label)
   }
-  optional { graph ?i { ?subjname nt:hasLabelFromApi ?subjnameLabel } }
-  optional { graph ?i { ?objname nt:hasLabelFromApi ?objnameLabel } }
-  graph <http://purl.org/np/RAodaWZBY-yDEtl9reYazBfI-YVD5L4zPh8RrVFS0kbEo#assertion> {
-    ?rel rdfs:label ?rellabel .
-  }
-  bind(coalesce(replace(str(?subjnameLabel), " - .*", ""), replace(str(?subjname), "^.*/([^/]*)$", "$1")) as ?subjx)
-  bind(coalesce(replace(str(?objnameLabel), " - .*", ""), replace(str(?objname), "^.*/([^/]*)$", "$1")) as ?objx)
-  bind(concat(?subjx, " ", ?rellabel, " ", ?objx) as ?label)
-  bind(replace(str(?rellabel), " - .*", "") as ?relx)
   filter not exists {
     graph npa:graph {
       ?newversion npa:hasHeadGraph ?nh .
