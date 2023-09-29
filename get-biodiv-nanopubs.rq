@@ -13,7 +13,7 @@ prefix biolink: <https://w3id.org/biolink/vocab/>
 prefix nt: <https://w3id.org/np/o/ntemplate/>
 prefix biodiv: <https://w3id.org/kpxl/biodiv/terms/>
 
-select distinct ?np ?label ?type ?creator ?pubkey ?date where {
+select distinct ?np ?label ?type ?creator ?pubkey ?date ?provtlabel where {
   graph npa:graph {
     ?np npa:hasHeadGraph ?h .
     ?np dct:created ?date .
@@ -30,6 +30,12 @@ select distinct ?np ?label ?type ?creator ?pubkey ?date where {
     bind(str(?labelx) as ?label)
     ?np npx:hasNanopubType biodiv:BiodivNanopub .
     filter not exists { ?np a npx:ExampleNanopub . }
+    ?np nt:wasCreatedFromProvenanceTemplate ?provtnp .
+  }
+  optional {
+    ?provtnp np:hasAssertion ?provt .
+    ?provt rdfs:label ?provtlabelx .
+    bind(str(?provtlabelx) as ?provtlabel)
   }
   optional {
     graph ?a {
