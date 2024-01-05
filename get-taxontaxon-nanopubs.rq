@@ -13,7 +13,7 @@ prefix nt: <https://w3id.org/np/o/ntemplate/>
 prefix biodiv: <https://w3id.org/kpxl/biodiv/terms/>
 prefix prov: <http://www.w3.org/ns/prov#>
 
-select distinct ?np ?label ?subjtaxonname ?rel ?objtaxonname ?source ?date where {
+select distinct ?np ?label ?subjtaxonname ?subjtaxonlabel ?rel ?objtaxonname ?objtaxonlabel ?source ?date where {
   graph npa:graph {
     ?np npa:hasHeadGraph ?h .
     ?np dct:created ?date .
@@ -44,6 +44,8 @@ select distinct ?np ?label ?subjtaxonname ?rel ?objtaxonname ?source ?date where
     ?np dct:creator ?__creator_iri .
     ?np rdfs:label ?labelx .
     bind(str(?labelx) as ?label)
+    optional { ?subjtaxonname nt:hasLabelFromApi ?subjtaxonlabel . }
+    optional { ?objtaxonname nt:hasLabelFromApi ?objtaxonlabel . }
   }
   filter not exists {
     graph npa:graph {
