@@ -14,7 +14,7 @@ prefix nt: <https://w3id.org/np/o/ntemplate/>
 prefix biodiv: <https://w3id.org/kpxl/biodiv/terms/>
 prefix prov: <http://www.w3.org/ns/prov#>
 
-select distinct ?np ?label ?type ?creator ?pubkey ?date ?provtlabel ?provsrc where {
+select distinct ?np ?label ?type (group_concat(distinct ?creator; separator = ", ") as ?creators) ?pubkey ?date ?provtlabel ?provsrc where {
   graph npa:graph {
     ?np npa:hasHeadGraph ?h .
     ?np dct:created ?date .
@@ -78,4 +78,5 @@ select distinct ?np ?label ?type ?creator ?pubkey ?date ?provtlabel ?provsrc whe
     }
   }
 }
+group by ?np ?label ?type ?pubkey ?date ?provtlabel ?provsrc
 order by desc(?date)
